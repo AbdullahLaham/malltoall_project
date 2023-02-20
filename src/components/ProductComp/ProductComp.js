@@ -20,7 +20,7 @@ const ProductComp = () => {
     const navigate = useNavigate();
     let index = 0;
   return (
-    <div className='box w-[17rem]'>
+    <div className='box w-[15.5rem]'>
         <div className='product mtop'>
         <div className='img'>
             <span className='discount'>In Stock</span>

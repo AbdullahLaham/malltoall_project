@@ -57,7 +57,7 @@ const ChatBox = ({ chat, currentUser, setSendMessage,  receivedMessage, chatDeta
   },[messages])
   useEffect(() => {
     setMessages(chat)
-  }, [])
+  }, [chat, messages]);
 
 
   // Send Message

@@ -2,6 +2,7 @@ import React from 'react'
 import user from '../img/cover.jpg'
 import location from '../images/location.png';
 import chat from '../images/chat.png';
+import ProductComp from '../components/ProductComp/ProductComp';
 
 const MarketDetails = () => {
   return (
@@ -22,11 +23,22 @@ const MarketDetails = () => {
         </div>
 
         {/* market products and services */}
-        <div dir='rtl' className='flex items-center justify-center gap-[.8rem] h-[30rem] mx-auto '>
-        <div className=' h-[100%] border border-gray-300 px-[1.5rem]'>
-            
+        <div dir='rtl' className='flex items-start justify-center gap-[.8rem] mx-auto my-[1rem]'>
+        <div className=' min-h-[30rem] h-[100%] border border-gray-300 px-[1.5rem] w-[80%] '>
+            <div className='flex items-end justify-between border-b pb-[.2rem] border-b-gray-400 relative'>
+                <p className='font-bold text-xl pb-1 '>أخر المنتجات</p>
+                <p className='absolute h-[.2rem] w-[7rem] bg-red-300 right-0 bottom-0'></p>
+                <button className='bg-[#F89090] text-white py-[.4rem] px-[2rem] rounded-lg mt-[1rem]' >الكل</button>
+            </div>
+            <div className='flex flex-wrap items-center justify-between'>
+            <ProductComp />
+            <ProductComp />
+            <ProductComp />
+            <ProductComp />
+            <ProductComp />
+            </div>
         </div>
-        <div className=' h-[100%] border border-gray-300 px-[1.5rem]'>
+        <div className=' border border-gray-300 px-[1.5rem] min-h-[30rem] h-[100%]'>
             <h3 className='font-bold mt-[2.5rem] mb-[2rem] text-[1.5rem] '>تصنيفات المتجر</h3>
             <div className='flex items-center justify-between mx-[1.5rem] mt-[1.2rem]'>
                 <p className='font-semibold text-[1.1rem] '>ملابس رجالي</p>
