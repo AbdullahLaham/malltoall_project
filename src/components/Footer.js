@@ -1,54 +1,88 @@
 // import { Button, InputBase, TextField } from '@mui/material'
 import React from 'react'
+import logo from '../images/logo.jpg'
+import facebook from '../images/facebook.png'
+import instagram from '../images/instagram.png'
+import twitter from '../images/twitter.png'
+import youtube from '../images/youtube.png'
+import Apple from '../images/Available_on_the_App_Store_logo.png';
+import Google from '../images/Google_Play_Store_badge_EN.svg.png';
+import {HiOutlineMail} from 'react-icons/hi'
 // import logo from '../images/logo.png'
 // import google from '../images/Google_Play_Store_badge_EN.svg.png';
 // import apple from '../images/Available_on_the_App_Store_logo.png'
 const Footer = () => {
   return (
-    <>
-      <div className='flex justify-center py-[1rem] border-t-2 border-b-2 border-t-gray-300 border-b-gray-300  bg-gray-100 text-gray-800 relative h-[16rem]'>
+    <div className='bg-[#8C8B8B] text-white m-0'>
+      <div className='flex justify-center py-[1rem] border-t-2 border border-t-gray-300 border-b-gray-400  relative '>
       <div className='flex flex-col lg:flex-row justify-between w-[85%] h-[100%] max-h-[100%]'>
-        {/* <div className='flex flex-col h-[10rem] justify-around w-[100%] lg:w-auto'>
-          <img className='w-[20rem]' src={logo} />
-          <div className='w-[20rem] flex items-center h-[2rem]'><InputBase sx={{height: '100%', backgroundColor: 'white', borderRadius: '.2rem', padding: '1rem'}} my='.5rem' placeholder='Your Email Address' /> <Button sx={{color: 'white', backgroundColor: 'orange', height: '100%'}}>Subscribe</Button></div>
-          <div className='w-[20rem] text-[.9rem] flex items-center'><img className='w-[10rem] mr-[.5rem]' src={google} /> <img className='w-[10rem] ' src={apple} /></div>
-        </div> */}
-
-
         <div className='justify-between flex flex-col lg:flex-row text-[.9rem] h-[100%] max-h-[100%]'>
-        <div className='w-[100%] lg:w-auto flex m-auto text-start h-[100%] max-h-[100%]'>
-            <div className='flex flex-col  lg:w-[13rem] w-[100%]  justify-between h-[100%] max-h-[100%]'>
-              <p className='font-bold text-gray-800'>CONTACT INFO</p>
-              <p className='text-gray'>Address: </p>
-              <p>Address </p>
-              <p className='text-gray'>Phone: </p>
-              <p>Phone </p>
-              <p className='text-gray'>Email: </p>
-              <p>info@mail.js</p>
+        <div className='w-[100%] lg:w-auto flex flex-col lg:flex-row md:flex-row m-auto text-start h-[100%] max-h-[100%]'>
+            <div dir='rtl' className='flex flex-col  lg:w-[13rem] w-[100%] gap-[.4rem] h-[100%] max-h-[100%]'>
+              <p className='font-bold '>أصحاب المتاجر</p>
+              <p className='text-gray'>هل ترغب في البيع على متجر مول تو أول؟</p>
+              <p>            <button className='bg-[#F89090] text-white py-[.4rem] px-[.5rem] rounded-lg mt-[1rem]' >اشترك معنا الان!</button> </p>
+
             </div>
-            <div className='flex  flex-col lg:w-[13rem] w-[100%]  justify-between h-[100%] max-h-[100%]'>
-              <p className='font-bold text-gray-800'>ZXCZXC</p>
-              <p>Home</p>
-              <p>New arrival</p>
-              <p className=''>Mobiles</p>
+
+
+            <div dir='rtl' className='flex  flex-col gap-[.3rem] lg:w-[13rem] w-[100%]  justify-between h-[100%] max-h-[100%]'>
+              <p className='font-bold '>خدمة الزبائن</p>
+              <p className='text-[.7rem]'>الابلاغ عن اساءة الاستخدام</p>
+              <p className='text-[.7rem]'>سياسة الاستبدال</p>
+              <p className='text-[.7rem]'>الاحكام والشروط</p>
+              <p className='text-[.7rem]'>طرق التسليم</p>
+              <p className='text-[.7rem]'>كيفية الشراء من المتجر</p>
+              <p className='text-[.7rem]'>الابلاغ عن ارجاع او استبدال الطرود</p>
             </div>
-            <div className='flex  flex-col  lg:w-[13rem] w-[100%]  justify-between h-[100%] max-h-[100%]'>
-              <p className='font-bold text-gray-800'>MY ACCOUNT</p>
-              <p className='text-gray'>Login </p>
-              <p className='text-gray'>Order History</p>
-              <p className='text-gray'>My Wishlist</p>
-              <p className='text-gray'>Track Order</p>
+
+
+            <div dir='rtl' className='flex  flex-col gap-[.3rem] lg:w-[13rem] w-[100%]  justify-between h-[100%] max-h-[100%]'>
+              <p className='font-bold '>المعلومات</p>
+              <p className='text-[.7rem]'>عن مول تو أول</p>
+              <p className='text-[.7rem]'>تواصل معنا</p>
+              <p className='text-[.7rem]'>تصنيفات المتجر</p>
+              <p className='text-[.7rem]'>طرق التسليم</p>
+              <p className='text-[.7rem]'>الدعم الفني</p>
+            </div>
+
+
+          </div>
+          
+
+        </div>
+        <div dir='rtl' className='flex flex-col gap-[.8rem] h-[100%] w-[25%]'>
+            <p className='text-start'>متجر مول تو أول</p>
+            <img src={logo} className='w-[8rem] ' />
+            <p className='text-[.4rem] text-start'>تابعنا على وسائل التواصل الاجتماعي لتعرف كل جديد ومميز</p>
+            <div className='flex items-center justify-between gap-2 flex-row-reverse w-[65%] '>
+              <img src={youtube} />
+              <img src={twitter} />
+              <img src={instagram} />
+              <img src={facebook} />
             </div>
           </div>
+      </div>
+      
+      
+    </div>
+    
+      <div className='flex items-center justify-between p-[.6rem] w-[86%] mx-auto'>
 
-
+        <div dir='rtl' className='flex flex-col gap-2'>
+          <p className='text-[.8rem] text-start'>حمل تطبيقنا لتسهيل وصول المنتجات اليك...</p>
+          <div className='flex items-center justify-around'>
+            <img className='w-[8rem]' src={Apple} />
+            <img className='w-[8rem]' src={Google} />
+          </div>
+        </div>
+        <div className='flex flex-col gap-2'>
+          <p className='text-[.8rem] text-start'>جميع الحقوق محفوظة - متجر مول تو أول</p>
+          <div className='flex items-center gap-1'><HiOutlineMail /> <p className='text-[.8rem] text-start'>malltoall@gmail.com</p></div>
         </div>
       </div>
 
-      
     </div>
-
-    </>
   )
 }
 

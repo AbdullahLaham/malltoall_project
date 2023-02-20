@@ -60,4 +60,4 @@ const AddsSection = () => {
   )
 }
 
-export default AddsSection
+export default AddsSection;

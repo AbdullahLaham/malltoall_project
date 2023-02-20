@@ -17,6 +17,7 @@ import UserAgent from 'user-agents';
 import { USER_AGENTS } from './constants';
 import { useDispatch } from 'react-redux';
 import Header from './components/Header';
+import MarketDetails from './containers/MarketDetails';
 
 
 function App() {
@@ -57,6 +58,8 @@ function App() {
         <Route path='/chat' element={<Chat />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/signup' element={<SignupPage />} />
+        <Route path='/market' element={<MarketDetails />} />
+        
       </Routes>
       <Footer />
     </div>
