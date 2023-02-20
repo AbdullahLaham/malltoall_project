@@ -20,11 +20,11 @@ const ProductComp = () => {
     const navigate = useNavigate();
     let index = 0;
   return (
-    <div className='box w-[15.5rem]'>
+    <div className='box w-[15.5rem] pointer-events-auto'>
         <div className='product mtop'>
         <div className='img'>
             <span className='discount'>In Stock</span>
-            <img src={product} className='' alt='' />
+            <img src={product} className='pointer-events-none' alt='' />
             <div className='product-like'>
                 <label>{(selected) ?  1  : 0}</label> <br />
                 {index != -1 || selected ? <BsHeartFill className='fill-red-500 mx-auto' /> : <AiOutlineHeart  sx={{fill: 'red'}} onClick={() => {addProductToWishist(0); setSelected(true);}} /> }

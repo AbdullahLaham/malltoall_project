@@ -38,28 +38,27 @@ const MarketDetails = () => {
             <ProductComp />
             </div>
         </div>
-        <div className=' border border-gray-300 px-[1.5rem] min-h-[30rem] h-[100%]'>
+        <div dir='rtl' className=' border border-gray-300 px-[1.5rem] min-h-[30rem] h-[100%]'>
             <h3 className='font-bold mt-[2.5rem] mb-[2rem] text-[1.5rem] '>تصنيفات المتجر</h3>
-            <div className='flex items-center justify-between mx-[1.5rem] mt-[1.2rem]'>
+            <div className='flex items-center justify-start cursor-pointer mt-[1.2rem]'>
                 <p className='font-semibold text-[1.1rem] '>ملابس رجالي</p>
             </div>
-            <div className='flex items-center justify-between mx-[1.5rem] mt-[1.2rem]'>
+            <div className='flex items-center justify-start cursor-pointer mt-[1.2rem]'>
                 <p className='font-semibold text-[1.1rem] '>ملابس حريمي</p>
             </div>
-            <div className='flex items-center justify-between mx-[1.5rem] mt-[1.2rem]'>
+            <div className='flex items-center justify-start cursor-pointer mt-[1.2rem]'>
                 <p className='font-semibold text-[1.1rem] '>ملابس أطفال</p>
             </div>
-            <div className='flex items-center justify-between mx-[1.5rem] mt-[1.2rem]'>
+            <div className='flex items-center justify-start cursor-pointer mt-[1.2rem]'>
                 <p className='font-semibold text-[1.1rem] '>جلبابات</p>
             </div>
-            <div className='flex items-center justify-between mx-[1.5rem] mt-[1.2rem]'>
+            <div className='flex items-center justify-start cursor-pointer mt-[1.2rem]'>
                 <p className='font-semibold text-[1.1rem] '>عبايات</p>
             </div>
         </div>
     </div>
-
     </div>
   )
 }
 
-export default MarketDetails
+export default MarketDetails;
