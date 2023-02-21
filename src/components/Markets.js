@@ -6,9 +6,33 @@ import {motion} from 'framer-motion'
 const Markets = () => {
   const [width, setWidth] = useState(0);
   const carousel = useRef();
+  const element = useRef();
+  const [windowSize, setWindowSize] = useState([
+    window.innerWidth,
+    window.innerHeight,
+  ]);
+const [result, setResult] = useState(false);
+
+useEffect(() => {
+    const handleWindowResize = () => {
+      setWindowSize([window.innerWidth, window.innerHeight]);
+    };
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  });
+  
+useEffect(() => {
+    console.log(windowSize);
+    setResult(window.matchMedia("(max-width: 800px)"));
+}, [windowSize]);
   useEffect(() => {
-    setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
-  }, [])
+    setWidth(result.matches ? (5.8 * element.current.clientWidth) : carousel.current.scrollWidth - carousel.current.offsetWidth);
+  }, []);
+
   return (
     <div dir='rtl' className='my-[1rem]'>
       {/* the title section */}
@@ -18,8 +42,8 @@ const Markets = () => {
 
         {/* markets section */}
       <motion.div className='carousel cursor-grab overflow-hidden ' ref={carousel} >
-        <motion.div drag='x' dragConstraints={{left: 0, right: width}} className='flex bg-lightblue'>
-          <motion.div className='flex flex-col justify-between  items-center shadow-md shadow-[#00000031] min-w-[15rem] m-[.5rem] p-[1.2rem] rounded-lg'>
+        <motion.div drag='x' dragConstraints={{left: 0, right: width}} className='flex bg-lightblue' >
+          <motion.div className='flex flex-col justify-between  items-center shadow-md shadow-[#00000031] min-w-[15rem] m-[.5rem] p-[1.2rem] rounded-lg' ref={element}>
               {/* market image */}
             <img className='w-[7rem] h-[5rem] object-cover rounded-lg ' src={user} />
               {/* market description */}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import moon from '../images/moon.png';
 import sun from '../images/constellation.png'
 import flag from '../images/flag.png'
@@ -9,16 +9,41 @@ import MenuComp from './headerAccountMenue/Menu';
 import { Link } from 'react-router-dom';
 import {AiOutlineHeart, AiOutlineShoppingCart} from 'react-icons/ai'
 import { FiSearch } from 'react-icons/fi'
-
-
+import {FaListUl} from 'react-icons/fa';
+import {GoSettings} from 'react-icons/go';
 
 const Header = () => {
     const [selected, setSelected] = useState('sun');
     const [showMenu, setShowMenu] = useState(false);
      // authData
      const {authData} = useSelector((state) => state.userReducer);
+
+     const [windowSize, setWindowSize] = useState([
+        window.innerWidth,
+        window.innerHeight,
+      ]);
+    const [result, setResult] = useState(false);
+
+    useEffect(() => {
+        const handleWindowResize = () => {
+          setWindowSize([window.innerWidth, window.innerHeight]);
+        };
+    
+        window.addEventListener('resize', handleWindowResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleWindowResize);
+        };
+      });
+      
+    useEffect(() => {
+        console.log(windowSize);
+        setResult(window.matchMedia("(max-width: 800px)"));
+    }, [windowSize]);
+     
   return (
-    <div>
+    <>
+        {!result.matches ? <div>
         <div className='flex items-center justify-between px-[1.6rem]  '>
             <div className='flex items-center gap-2'>
                 <div className='flex items-center bg-black rounded-[20px] '>
@@ -87,7 +112,27 @@ const Header = () => {
             <p className='font-bold cursor-pointer '>المدونة</p>
         </div>
         <hr />
+    </div> :
+    <div dir='rtl'>
+        <div className='flex items-center justify-between px-[1.6rem] '>
+            <FaListUl />
+            <div className='relative '>
+                <img src={bell} className=' w-[1.3rem] ' />
+                <p className='absolute -top-[.7rem]  -right-[.2rem] text-red-500 bg-white rounded-full w-[1rem] h-[1rem] flex items-center justify-center p-[.5rem]  shadow-sm shadow-black	'>5</p>
+            </div>
+        </div>
+        <div className='flex items-center justify-between px-[1.2rem]'>
+            <div className='text-white bg-red-600 text-2xl  p-[.8rem] rounded-md cursor-pointer'>
+                <GoSettings className='text-white   ' />
+            </div>
+            <div className='w-[80%] relativeborder border border-gray-300 relative rounded-lg m-[.8rem]'>
+                <input  type={'text'} className='border-none outline-none rounded-[.9rem] w-[100%] p-[.6rem] ' placeholder='ابحث عن المنتج أو المتجر'  />
+                <FiSearch  className='absolute top-[34%] left-2  '/>
+            </div>
+        </div>
     </div>
+     }
+    </>
   )
 }
 

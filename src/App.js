@@ -18,9 +18,13 @@ import { USER_AGENTS } from './constants';
 import { useDispatch } from 'react-redux';
 import Header from './components/Header';
 import MarketDetails from './containers/MarketDetails';
+import BottomMenue from './components/BottomMenue';
+import AccountSidebarComponent from './components/AccountSidebarComponent'
+import ProductDetails from './containers/ProductDetails';
 
 
 function App() {
+
   const [showAccountSidebar, setShowAccountSidebar] = useState(false);
   // the category for the shop page
   const [filterCategory, setFilterCategory] = useState([]);
@@ -39,9 +43,31 @@ function App() {
   // console.log(userAgent.toString());
   // console.log(JSON.stringify(userAgent.data, null, 2));
 
-  useEffect(() => {
+  const [isMobile, setIsMobile] = useState(false);
+    const [windowSize, setWindowSize] = useState([
+        window.innerWidth,
+        window.innerHeight,
+      ]);
 
-  }, [])
+
+    useEffect(() => {
+        const handleWindowResize = () => {
+          setWindowSize([window.innerWidth, window.innerHeight]);
+        };
+    
+        window.addEventListener('resize', handleWindowResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleWindowResize);
+        };
+      });
+      
+    useEffect(() => {
+        console.log(windowSize);
+        setIsMobile(window.matchMedia("(min-width: 800px)"));
+    }, [windowSize]);
+
+    
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -50,8 +76,9 @@ function App() {
   }, [showAccountSidebar]);
   
   return (
-    <div className="App w-[100%] min-w-[100%] max-w-[100%]  relative">
+    <div className="App w-[100%] min-w-[100%] max-w-[100%] relative">
       <Header />
+      {isMobile && <AccountSidebarComponent showAccountSidebar={showAccountSidebar} setShowAccountSidebar={setShowAccountSidebar} />}
       <Routes>
         <Route path='/' element={<HomePage    />} /> 
         {/* <Route path='/chat' element={<Chat />} /> */}
@@ -59,9 +86,10 @@ function App() {
         <Route path='/login' element={<LoginPage />} />
         <Route path='/signup' element={<SignupPage />} />
         <Route path='/market' element={<MarketDetails />} />
-        
+        <Route path='/product' element={<ProductDetails />} />
       </Routes>
       <Footer />
+      {isMobile && <BottomMenue showAccountSidebar={showAccountSidebar} setShowAccountSidebar={setShowAccountSidebar}  />}
     </div>
   );
 }

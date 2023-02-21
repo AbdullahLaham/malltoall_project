@@ -1,10 +1,33 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import cart from '../images/cart.jpeg';
 import chat from '../images/chat.jpeg';
-
+import about from '../images/about.svg'
 const AddsSection = () => {
+    const [windowSize, setWindowSize] = useState([
+        window.innerWidth,
+        window.innerHeight,
+      ]);
+    const [result, setResult] = useState(false);
+
+    useEffect(() => {
+        const handleWindowResize = () => {
+          setWindowSize([window.innerWidth, window.innerHeight]);
+        };
+    
+        window.addEventListener('resize', handleWindowResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleWindowResize);
+        };
+      });
+      
+    useEffect(() => {
+        console.log(windowSize);
+        setResult(window.matchMedia("(max-width: 800px)"));
+    }, [windowSize]);
   return (
-    <div className='flex items-center justify-center gap-[.8rem] h-[30rem] mx-auto '>
+    <div>
+        {!result?.matches ? (<div className='flex items-center justify-center gap-[.8rem] h-[30rem] mx-auto '>
         <div className=' h-[100%] w-[25%] bg-[#F8F5F5] '>
             <h3 className='font-bold mt-[2.5rem] mb-[2rem] text-[2rem] '>التصنيفات</h3>
             <div className='flex items-center justify-between mx-[1.5rem] mt-[1.2rem]'>
@@ -44,7 +67,7 @@ const AddsSection = () => {
                 </div>
                 
             </div>
-            <img className='w-[18rem] m-[1rem] -mt-[3rem] ' src={'http://alkawareet.me/images/about.svg'} />
+            <img className='w-[18rem] m-[1rem] -mt-[3rem] ' src={about} />
         </div>
 
 
@@ -56,6 +79,11 @@ const AddsSection = () => {
             <button className='bg-[#F89090] text-white py-[.4rem] px-[3.5rem] rounded-lg mt-[1rem]' >تسجيل </button>
             <button className='border border-[#F89090] text-[#070707] font-semibold mt-[.5rem] py-[.4rem] px-[2.2rem] rounded-lg '>تسجيل الدخول</button>
         </div>
+        </div>) : (
+            <div dir='rtl' className='m-auto w-[90%] rounded-lg  h-[15rem] addsbg flex flex-col items-start justify-end '>
+                <p className='text-white font-bold w-[50%] m-[2rem] flex justify-start'>متجر Mall To All المتجر الاول في فلسطين</p>
+            </div>
+        )}
     </div>
   )
 }
