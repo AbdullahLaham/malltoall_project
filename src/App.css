@@ -161,4 +161,39 @@ body {
 
 
 
-/*  */
+/* product reviews section */
+
+.review-info {
+  position: relative;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  padding: 25px;
+}
+
+@media (max-width: 767px) {
+ .review-info {
+    padding: 20px;
+  }
+}
+
+.review-info::before {
+  position: absolute;
+  top: 8px;
+  right: -1.2rem;
+  width: 0;
+  height: 0;
+  border: solid transparent;
+  content: '';
+  rotate: 180deg;
+  pointer-events: none;
+  margin-top: 9px;
+  border-width: 10px;
+  border-color: transparent;
+  border-right-color: #e5e5e5;
+}
+
+@media (max-width: 767px) {
+  .review-info::before {
+    top: 5px;
+  }
+}
