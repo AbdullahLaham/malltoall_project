@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const API = axios.create({ baseURL: 'https://applabb.account-collection.com/api/' });
 const MallAPI = axios.create({ baseURL: 'https://applabb.account-collection.com/malltoallmanager/api/' });
@@ -15,7 +16,7 @@ API.interceptors.request.use((req) => {
 export const fetchChatUsers = async () => {
     const res = await MallAPI.get(`/store-view-chat`, {
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${Cookies.get('token')}`
         },
     });
     return res;
@@ -24,7 +25,7 @@ export const fetchChatUsers = async () => {
 export const fetchChatMessages = async (chatId) => {
     const res = await MallAPI.get(`/store-view-chat/${chatId}`, {
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${Cookies.get('token')}`
         },
     });
     return res;
@@ -96,7 +97,7 @@ export const createTransaction = async (orderData) => {
 export const fetchWishlistItems = async () => {
     const res = await API.get(`/wishlist-item`, {
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${Cookies.get('token')}`
         },
     });
     console.log('res', res);
@@ -105,7 +106,7 @@ export const fetchWishlistItems = async () => {
 export const addToWishlist = async (id, enqueueSnackbar) => {
     await API.post(`/add-wishlist`, {
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${Cookies.get('token')}`
         },
         product_id: id,
     }).then((res) => {
@@ -120,7 +121,7 @@ export const addToWishlist = async (id, enqueueSnackbar) => {
 export const deleteFromWishlist = async (id, enqueueSnackbar) => {
     await API.delete(`/delWishlist-item/${id}`, {
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${Cookies.get('token')}`
         },
     }).then((res) => {
         enqueueSnackbar('Product deleted from wishlist Succesfully', {variant: 'success',});
@@ -136,7 +137,7 @@ export const deleteFromWishlist = async (id, enqueueSnackbar) => {
 export const logoutUser = async () => {
     const res = await API.delete(`/auth/tokens/${localStorage.getItem('tokenNumber')}`, {
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${Cookies.get('token')}`
         },
     });
     console.log('res', res);
@@ -152,7 +153,7 @@ export const sendNewMessages = async (message) => {
     },
     {
         headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${Cookies.get('token')}`
         },
     });
     return res;

@@ -1,10 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: ['./src/**/*.{html,js,svelte,ts}'],
+  
   theme: {
     extend: {
       backgroundImage: {
         'footer-texture': "url('/img/footer-texture.png')",
+      },
+      colors: {
+        "primary-home-back": '#006178',
       },
       screens: {
         'sm': '640px',

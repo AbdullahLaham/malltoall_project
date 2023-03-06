@@ -10,22 +10,28 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Pusher from "pusher-js";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 // import { io } from "socket.io-client";
 
 const Chat = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const socket = useRef();
 
-  // pusher 
-  const pusher = new Pusher('427f576d163484fae8d0', {
-    cluster: 'ap2',
-  });
-  var channel = pusher.subscribe('my-channel');
+  // // pusher 
+  // const pusher = new Pusher('427f576d163484fae8d0', {
+  //   cluster: 'ap2',
+  // });
 
-  channel.bind('my-event', function(data) {
-    alert(JSON.stringify(data));
-  });
-  // const { authData } = useSelector((state) => state.userReducer);
+  // var channel = pusher.subscribe('presence-Messenger.1');
+
+
+
+  // channel.bind('my-event', function(data) {
+  //   alert(JSON.stringify(data));
+  // });
+  
+  const { authData } = useSelector((state) => state.userReducer);
   
   
   const [chats, setChats] = useState([]);
@@ -39,7 +45,10 @@ const Chat = () => {
   // Get the chat in chat section
 
   useEffect(() => {
-
+    // redirect to login page
+    if (!authData?.email) {
+      navigate('/login');
+    }
     const getChats = async () => {
       try {
         const { data } = await api.fetchChatUsers();
@@ -56,10 +65,12 @@ const Chat = () => {
 
   const fetchMessagesData = async (chatId) => {
     try {
+
       setChatMessages([]);
       const { data } = await api.fetchChatMessages(chatId);
-      console.log('chats', data);
-      setChatMessages(data?.messages?.data);
+      console.log('chatssssssssss', data);
+      setChatMessages(data?.messages);
+
     } catch (error) {
       console.log(error);
     }
@@ -80,10 +91,16 @@ const Chat = () => {
   
   useEffect(() => {
     if (sendMessage!==null) {
-      socket.current.emit("send-message", sendMessage);}
+      socket.current.emit("send-message", sendMessage);
+    }
   }, [sendMessage]);
 
+  // pusher 
+  const pusher = new Pusher('427f576d163484fae8d0', {
+    cluster: 'ap2',
+  });
 
+  var channel = pusher.subscribe('presence-Messenger.2');
 
 
 
@@ -94,46 +111,60 @@ const Chat = () => {
   const [usersRemoved, setUsersRemoved] = useState([]);
 
   useEffect( () => {
-    const channel = pusher.subscribe("3"); 
+    // const channel = pusher.subscribe("3"); 
     // when a new member successfully subscribes to the channel
-    channel.bind("pusher:subscription_succeeded", (members) => {
+
+
+
+
+    //  important
+
+    // channel.bind("pusher:subscription_succeeded", (members) => {
+    //   // total subscribed
+    //   console.log('successssssssssssssssssssssssssssss');
+    //   setOnlineUsersCount(members.count);
+    // });
+    channel.bind("new-message", (message) => {
       // total subscribed
-      console.log('success');
-      setOnlineUsersCount(members.count);
+      console.log('successssssssssssssssssssssssssssss', message);
+      // setOnlineUsersCount(members.count);
     });
 
-    // when a new member joins the chat
-    channel.bind("pusher:member_added", (member) => {
-      // console.log("count",channel.members.count)
-      setOnlineUsersCount(channel.members.count);
-      setOnlineUsers((prevState) => [
-        ...prevState,
-        { username: member.info.username, userLocation: member.info.userLocation },
-      ]);
-    });
+    // // when a new member joins the chat
+    // channel.bind("pusher:member_added", (member) => {
+
+    //   console.log("countttttttttttttttttttttt")
+    //   setOnlineUsersCount(channel.members.count);
+    //   setOnlineUsers((prevState) => [
+    //     ...prevState,
+    //     { username: member.info.username, userLocation: member.info.userLocation },
+    //   ]);
+    // });
 
     // when a member leaves the chat
-    channel.bind("pusher:member_removed", (member) => {
-      setOnlineUsersCount(channel.members.count);
-      setUsersRemoved((prevState) => [...prevState, member.info.username]);
-    });
+    // channel.bind("pusher:member_removed", (member) => {
+    //   setOnlineUsersCount(channel.members.count);
+    //   setUsersRemoved((prevState) => [...prevState, member.info.username]);
+    // });
 
     // updates chats
-    channel.bind("chat-update", function (data) {
-      const {username, message} = data;
-      // setChats((prevState) => [
-      //   ...prevState,
-      //   { username, message },
-      // ]);
-    });
+
+    
+    // channel.bind("chat-update", function (data) {
+    //   const {username, message} = data;
+    //   // setChats((prevState) => [
+    //   //   ...prevState,
+    //   //   { username, message },
+    //   // ]);
+    // });
     
     return () => {
-      pusher.unsubscribe("presence-channel");
+      // pusher.unsubscribe("presence-channel");
     };
   }, []);
 
   const handleSignOut = () => {
-    pusher.unsubscribe("presence-channel");
+    // pusher.unsubscribe("presence-channel");
     // router.push("/");
   };
 
@@ -144,27 +175,6 @@ const Chat = () => {
       message: messageToSend,
     });
   };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -215,12 +225,12 @@ const Chat = () => {
                   setCurrentChat(chat);
                 }}
               >
-                <div onClick={() => {fetchMessagesData(chat?.id); setChatSelected(chat?.name ? chat?.name : chat?.participants[0]['name']); }} >
+                <div onClick={() => {fetchMessagesData(chat?.id); setChatSelected(chat?.id); }} >
                   <Conversation
                     data={chat}
                     currentUser={''}
                     online={checkOnlineStatus(chat)}
-                    isSelected={(chatSelected == chat?.name) || (chatSelected == chat?.participants && chat?.participants[0]['name'])}
+                    isSelected={(chatSelected == chat?.id)}
                   />
                 </div>
               </div>)

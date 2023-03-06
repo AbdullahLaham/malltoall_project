@@ -1,4 +1,6 @@
-import {  ADD_TO_CART, DELETE_FROM_CART, UPDATE_CART_ITEM, TRANSACTION, LATEST_PRODUCTS, CATEGORY_PRODUCTS, CURRENT_PRODUCT, CATEGORIES, ALL_PRODUCTS, GET_BRANDS, SLIDER_IMAGES, CURRENT_CATEGORY, WHISHLIST_ITEMS, START_LOADING, END_LOADING, PAGE_SELECTED, PRODUCT_REVIEWS, USER_AGENTS } from "../constants";
+import {  ADD_TO_CART, DELETE_FROM_CART, UPDATE_CART_ITEM, TRANSACTION, LATEST_PRODUCTS, CATEGORY_PRODUCTS, CURRENT_PRODUCT, CATEGORIES, ALL_PRODUCTS, GET_BRANDS, SLIDER_IMAGES, CURRENT_CATEGORY, WHISHLIST_ITEMS, START_LOADING, END_LOADING, PAGE_SELECTED, PRODUCT_REVIEWS, USER_AGENTS, DARK_THEME, LIGHT_THEME } from "../constants";
+import Cookies from 'js-cookie';
+
 const reducer = (state = { 
         cart: (localStorage.getItem('cart')!== "undefined" && localStorage.getItem('cart')) ? JSON.parse(localStorage.getItem('cart')) : [],
         // transaction: null,
@@ -18,6 +20,7 @@ const reducer = (state = {
         page_selected: localStorage.getItem('page_selected')!== "undefined" ? localStorage.getItem('page_selected') : '',
         product_reviews: localStorage.getItem('product_reviews') ? JSON.parse(localStorage.getItem('product_reviews')) : [],           
         userAgents: localStorage.getItem('userAgents') ? JSON.parse(localStorage.getItem('userAgents')) : '',
+        theme: Cookies.get('theme') ? Cookies.get('theme') : 'light',
     },
 
     action
@@ -129,6 +132,15 @@ const reducer = (state = {
             return {...state, userAgents: action?.payload}
         }
         
+
+        case DARK_THEME: {
+            Cookies.set('theme', 'black');
+            return {...state, theme: 'dark'}
+        }
+        case LIGHT_THEME: {
+            Cookies.set('theme', 'light');
+            return {...state, theme: 'light'}
+        }
         default: {
             return state;
         }

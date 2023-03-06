@@ -65,6 +65,7 @@ const SignupPage = () => {
         }
       }  
   return (
+    
     <div className='w-[80%] m-auto flex gap-[3rem] bg-gray-100 h-[100vh]  max-h-[100vh] overflow-y-hidden'>
       <div className='w-[37%] p-[3rem] lg:flex justify-center items-start  bg-gradient-to-b from-orange-500 via-orange-600 to-orange-700 h-[100vh] hidden '>
         <div className='flex flex-col justify-between h-[30rem] mt-[4.5rem] '>

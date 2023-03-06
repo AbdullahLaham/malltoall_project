@@ -69,8 +69,7 @@ const SidebarComponent = ({showAccountSidebar, setShowAccountSidebar}) => {
         console.log(windowSize);
         setIsMobile(window.matchMedia("(max-width: 800px)"));
     }, [windowSize]);
-
-
+    
   const headerItems = [
     {
       name: 'Dashboard',
@@ -92,13 +91,7 @@ const SidebarComponent = ({showAccountSidebar, setShowAccountSidebar}) => {
       icon: <BsBag className='text-[1.5rem]'  />,
       link: '/dashboard/cart',
     },
-
-  
   ];
-
-
-
-
   return (
     isMobile && (<div className={`w-[85%] h-[100vh] max-h-[90vh] z-20 fixed top-0  bg-white flex-col justify-between backdrop-blur	 ${showAccountSidebar ? 'left-0 boxshadow-style flex' : '-left-[100%]'} ease-in-out delay-150`}>
       <div>

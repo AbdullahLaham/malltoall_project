@@ -22,11 +22,12 @@ export const logoutUser = (navigate) => async (dispatch) => {
 
 export const signupUser = (user, navigate) => async (dispatch) => {
     const {data} = await api.signup(user);
-    console.log(data);
+    console.log('current user', data);
     
     if (data) {
+        dispatch({type: SIGNUP, payload: data});
         navigate('/');
     }
-    dispatch({type: SIGNUP, payload: data});
+    
     // window.location.reload();
 }
