@@ -16,10 +16,12 @@
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 }
+
 input {
     background-color: transparent !important;
 }
-.input-box input:focus~label
+.input-box input:focus~label,
+.input-box input:active~label
  {
     top: 5px;
 

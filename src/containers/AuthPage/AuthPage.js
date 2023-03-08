@@ -4,9 +4,9 @@ import {FaFacebookF, FaLinkedinIn, FaUserAlt} from 'react-icons/fa';
 import {BsInstagram, BsYoutube} from 'react-icons/bs';
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as yup from 'yup'
-import { loginUser } from '../../actions/users';
+import { loginUser, signupUser } from '../../actions/users';
 import {SiGmail} from 'react-icons/si';
 import {FaLock} from 'react-icons/fa';
 
@@ -15,9 +15,13 @@ const AuthPage = () => {
   const navigate = useNavigate();
   // dispatch
   const dispatch = useDispatch();
-
+  // userAgents
+  const {userAgents} = useSelector((state) => state?.generalReducer);
   // signin or signup
   const [isSignIn, setIsSignIn] = useState(true);
+
+
+  //  signin manipulation
 
   const validationSchema = yup.object({
     email: yup.string().email('please enter a valid email').required("the email is required"),
@@ -61,6 +65,47 @@ const AuthPage = () => {
   }
 );
 
+
+
+  // signup manipulation
+
+  const signupValidationSchema = yup.object({
+    email: yup.string().email('please enter a valid email').required("the email is required"),
+    password: yup.string().required('password is required'),
+    confirmPassword: yup.string().required('confirmPassword is required').oneOf([yup.ref("password"), null], "Passwords must match"),
+  });
+
+ 
+
+  const SignupSubmit = async (values) => {
+   try {
+        const user = { 
+          name: values.name, 
+          email: values.email,
+          password: values.password,
+          device_name: 'userAgents',
+      };
+      console.log(user);
+      dispatch(signupUser(user, navigate));
+    } catch (error) {
+       console.log(error);
+    }
+}
+
+
+  const formik2 = useFormik({
+    initialValues: {
+        name: '',  
+        email: '',
+        password: '',
+        confirmPassword: '',
+        device_name: "",
+    },
+    validateOnBlur: true,
+    SignupSubmit,
+    validationSchema: signupValidationSchema,
+  });
+  
   return (
     <div className='w-[100%] h-[100vh] m-0 flex bg-[#02263d] items-center justify-center   '>
         <div  className='container w-[85%] h-[90%] flex'>
@@ -90,10 +135,11 @@ const AuthPage = () => {
                           <input type={'password'} name="password" onChange={formik.handleChange} value={formik.values.password} className='w-[100%] h-[100%] bg-transparent border-none outline-none' />
                           <label className='text-[16px] transition-[.5s] ease-in-out  font-semibold pointer-events-none absolute top-[2rem] left-0 -translate-y-[50%]'>Password</label>
                         </div>
+                        {formik.touched.password && formik?.errors?.password}
+
 
                         
 
-                        {formik.touched.password && formik?.errors?.password}
                         <button type='submit' className='flex items-center justify-center w-[100%] text-[1.2rem] h-[45px] bg-gradient-to-r from-[#044685] to-[#005bb1] hover:to-[#307cc4] font-bold transition-all duration-200 shadow-sm shadow-black rounded-[5px] text-center  mt-[2rem] ' onClick={() => setIsSignIn(false)}>Sign in</button>
                         <div className='login-register text-center font-semibold text-[1.1rem] mt-[1.5rem]'>
                           Dont have account ? <a href='#' className='register-link text-white font-bold no-underline hover:underline' onClick={() => setIsSignIn(false)}>Sign up</a>
@@ -104,30 +150,37 @@ const AuthPage = () => {
                   <div className={`absolute form-box register flex flex-col transition-all duration-[.5s] justify-center ${!isSignIn ? 'translate-x-0' : 'translate-x-[30rem]'} items-center w-[100%] h-[100%] bg-transparent backdrop-blur-xl text-[#e4e4e4] `}>
                     {/* <input type= /> */}
                     <h2 className='font-semibold text-3xl text-center title'>SIGN UP</h2>
-                    <form onSubmit={formik.handleSubmit} className='flex flex-col w-[100%] m-[1rem]' >
+                    <form onSubmit={formik2.handleSubmit} className='flex flex-col w-[100%] m-[1rem]' >
 
                         <div className='relative input-box border-b border-[#e4e4e4] h-[4rem] m-[15px] mb-0'>
                           <span className='icon absolute right-0 top-[1.8rem] ' ><FaUserAlt /></span>
-                          <input type={'password'} name="password" onChange={formik.handleChange} value={formik.values.password} className='w-[100%] h-[100%] bg-transparent border-none outline-none' />
+                          <input type={'text'} name="text" onChange={formik2.handleChange} value={formik2.values.name} className='w-[100%] h-[100%] bg-transparent border-none outline-none' />
                           <label className='text-[16px] transition-[.5s] ease-in-out  font-semibold pointer-events-none absolute top-[2rem] left-0 -translate-y-[50%]'>Name</label>
                         </div>
+                        {formik2.touched.name && formik2?.errors?.name}
                         <div className='relative input-box h-[4rem] border-b border-[#e4e4e4] m-[15px] mb-0'>
                           <span className='icon absolute right-0 top-[1.8rem] ' ><SiGmail /></span>
-                          <input  name="email" type='email'  onChange={formik.handleChange} value={formik.values.email} className={`w-[100%] h-[100%] bg-transparent border-none outline-none`} />
+                          <input  name="email" type='email'  onChange={formik2.handleChange} value={formik2.values.email} className={`w-[100%] h-[100%] bg-transparent border-none outline-none`} />
                           <label className='text-[16px] transition-[.5s] ease-in-out font-semibold pointer-events-none absolute top-[2rem] left-0 -translate-y-[50%]'>Email</label>
                         </div>
 
-                        {formik.touched.email && formik?.errors?.email}
+                        {formik2.touched.email && formik2?.errors?.email}
                         
                         <div className='relative input-box border-b border-[#e4e4e4] h-[4rem] m-[15px] mb-0'>
                           <span className='icon absolute right-0 top-[1.8rem] ' ><FaLock /></span>
-                          <input type={'password'} name="password" onChange={formik.handleChange} value={formik.values.password} className='w-[100%] h-[100%] bg-transparent border-none outline-none' />
+                          <input type={'password'} name="password" onChange={formik2.handleChange} value={formik2.values.password} className='w-[100%] h-[100%] bg-transparent border-none outline-none' />
                           <label className='text-[16px] transition-[.5s] ease-in-out  font-semibold pointer-events-none absolute top-[2rem] left-0 -translate-y-[50%]'>Password</label>
                         </div>
 
-                        
+                        {formik2.touched.password && formik2?.errors?.password}
 
-                        {formik.touched.password && formik?.errors?.password}
+                        <div className='relative input-box border-b border-[#e4e4e4] h-[4rem] m-[15px] mb-0'>
+                          <span className='icon absolute right-0 top-[1.8rem] ' ><FaLock /></span>
+                          <input type={'password'} name="confirmPassword" onChange={formik2.handleChange} value={formik2.values.confirmPassword} className='w-[100%] h-[100%] bg-transparent border-none outline-none' />
+                          <label className='text-[16px] transition-[.5s] ease-in-out  font-semibold pointer-events-none absolute top-[2rem] left-0 -translate-y-[50%]'>Confirm Password</label>
+                        </div>
+                        {formik2.touched.confirmPassword && formik2?.errors?.confirmPassword}
+
                         <button type='submit' className='flex items-center justify-center w-[100%] text-[1.2rem] h-[45px] bg-gradient-to-r from-[#044685] to-[#005bb1] hover:to-[#307cc4] font-bold transition-all duration-200 shadow-sm shadow-black rounded-[5px] text-center  mt-[2rem] '>Sign up</button>
                         <div className='login-register text-center font-semibold text-[1.1rem] mt-[1.5rem]'>
                           Dont have account ? <a href='#' className='register-link text-white font-bold no-underline hover:underline' onClick={() => setIsSignIn(true)}>Sign in</a>
